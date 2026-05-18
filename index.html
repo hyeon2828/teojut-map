@@ -8,30 +8,42 @@
         body { margin: 0; padding: 0; background-color: #f0f0f0; }
         #map { width: 100vw; height: 100vh; }
     </style>
+    
+    <script>
+        window.onerror = function(msg, url, line) {
+            alert("JS 에러: " + msg + "\n줄 번호: " + line);
+        };
+    </script>
+    
     <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=6d414e406ed0a17315067c22fc7c4597"></script>
 </head>
 <body>
     <div id="map"></div>
     <script>
-        // 1. 앱(WebView)에서 보낸 위도(lat), 경도(lng) 파라미터를 읽어옴
-        const urlParams = new URLSearchParams(window.location.search);
-        const lat = urlParams.get('lat') || 37.5665; // 값을 못 받으면 서울시청을 기본값으로
-        const lng = urlParams.get('lng') || 126.9780;
+        // SDK가 정상적으로 로드되었는지 확인
+        if (typeof kakao === 'undefined' || !kakao.maps) {
+            alert("카카오 SDK 다운로드 실패! 카카오 디벨로퍼스에 'https://hyeon2828.github.io' 가 정확히 등록되었는지 확인하세요.");
+        } else {
+            // URL에서 위도/경도를 가져와서 '숫자(Float)'로 강제 변환
+            const urlParams = new URLSearchParams(window.location.search);
+            const lat = parseFloat(urlParams.get('lat')) || 37.5665;
+            const lng = parseFloat(urlParams.get('lng')) || 126.9780;
 
-        // 2. 지도 생성
-        var mapContainer = document.getElementById('map');
-        var mapOption = {
-            center: new kakao.maps.LatLng(lat, lng),
-            level: 3
-        };
-        var map = new kakao.maps.Map(mapContainer, mapOption);
+            // 지도 그리기
+            var mapContainer = document.getElementById('map');
+            var mapOption = {
+                center: new kakao.maps.LatLng(lat, lng),
+                level: 3
+            };
+            var map = new kakao.maps.Map(mapContainer, mapOption);
 
-        // 3. 마커 생성
-        var markerPosition = new kakao.maps.LatLng(lat, lng);
-        var marker = new kakao.maps.Marker({
-            position: markerPosition
-        });
-        marker.setMap(map);
+            // 마커 꽂기
+            var markerPosition = new kakao.maps.LatLng(lat, lng);
+            var marker = new kakao.maps.Marker({
+                position: markerPosition
+            });
+            marker.setMap(map);
+        }
     </script>
 </body>
 </html>
