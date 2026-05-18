@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Teojut Map</title>
+    <style>
+        body { margin: 0; padding: 0; background-color: #f0f0f0; }
+        #map { width: 100vw; height: 100vh; }
+    </style>
+    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=6d414e406ed0a17315067c22fc7c4597"></script>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        // 1. 앱(WebView)에서 보낸 위도(lat), 경도(lng) 파라미터를 읽어옴
+        const urlParams = new URLSearchParams(window.location.search);
+        const lat = urlParams.get('lat') || 37.5665; // 값을 못 받으면 서울시청을 기본값으로
+        const lng = urlParams.get('lng') || 126.9780;
+
+        // 2. 지도 생성
+        var mapContainer = document.getElementById('map');
+        var mapOption = {
+            center: new kakao.maps.LatLng(lat, lng),
+            level: 3
+        };
+        var map = new kakao.maps.Map(mapContainer, mapOption);
+
+        // 3. 마커 생성
+        var markerPosition = new kakao.maps.LatLng(lat, lng);
+        var marker = new kakao.maps.Marker({
+            position: markerPosition
+        });
+        marker.setMap(map);
+    </script>
+</body>
+</html>
