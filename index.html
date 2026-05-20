@@ -24,7 +24,7 @@
         if (typeof kakao === 'undefined' || !kakao.maps) {
             alert("카카오 SDK 다운로드 실패! 카카오 디벨로퍼스에 'https://hyeon2828.github.io' 가 정확히 등록되었는지 확인하세요.");
         } else {
-            // URL에서 위도/경도를 가져와서 '숫자(Float)'로 강제 변환
+            // URL에서 위도/경도를 가져와서 Float으로 강제 변환
             const urlParams = new URLSearchParams(window.location.search);
             const lat = parseFloat(urlParams.get('lat')) || 37.5665;
             const lng = parseFloat(urlParams.get('lng')) || 126.9780;
